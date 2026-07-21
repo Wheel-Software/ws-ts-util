@@ -24,3 +24,11 @@ jobs:
 
       - name: Run Tests
         run: npm test
+
+      - name: Add Job Summary
+        run: |
+          echo "### 🚀 Cloud Integration Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Tests: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Message: $(git log -1 --pretty=%s)" >> $GITHUB_STEP_SUMMARY

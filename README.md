@@ -1,4 +1,4 @@
-![CI Status](https://github.com/Wheel-Software/ws-ts-util/workflows/test.yaml/badge.svg)
+![CI Tests](https://github.com/Wheel-Software/ws-ts-util/actions/workflows/test.yaml/badge.svg)
 
 # Wheel Software: ws-ts-util
 
