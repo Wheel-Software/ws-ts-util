@@ -1,10 +1,10 @@
 {
   "name": "ws-ts-util",
-  "version": "1.8.2",
+  "version": "0.0.2",
   "description": "htrollws",
   "private": true,
   "scripts": {
-    "tests": "NODE_OPTIONS='--disable-warning=ExperimentalWarning --experimental-vm-modules' jest",
+    "test": "NODE_OPTIONS='--disable-warning=ExperimentalWarning --experimental-vm-modules' jest",
     "testst": "ttime=`date` && echo ${ttime} && npm run tests || echo ${ttime}"
   },
   "keywords": [],
