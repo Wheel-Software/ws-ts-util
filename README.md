@@ -4,6 +4,6 @@
 
 # Wheel Software: ws-ts-util
 
-- Handful of utilities I used on my sites.
+- Couple of utilities.
 - Integration: 1 source file, 1 test suite;
   8 exported functions, 8 tests.
