@@ -1,8 +1,5 @@
-//const React = require('react');
-//const myfunction = require('../ts/LoadingDots').default;
 import { describe, expect, test } from "@jest/globals";
 import * as wsc from "../common-code/wscommon";
-//const wsc = require('../ts/wscommon');
 
 describe("get_unique_id", () => {
   test("returns a unique ID", () => {
@@ -19,6 +16,18 @@ describe("constrastingColor24bit", () => {
   });
   test("returns contrasting color for #ffffff", () => {
     expect(wsc.constrastingColor24bit("#ffffff")).not.toBe("#ffffff");
+  });
+});
+
+describe("normalizeColor", () => {
+  test("12bit to 24bit: #333->#333333", () => {
+    expect(wsc.normalizeColor("#333")).toBe("#333333");
+  });
+  test("24bit unchanged: #333333->#333333", () => {
+    expect(wsc.normalizeColor("#333333")).toBe("#333333");
+  });
+  test("web color properly replaced: teal->#008080", () => {
+    expect(wsc.normalizeColor("teal")).toBe("#008080");
   });
 });
 
