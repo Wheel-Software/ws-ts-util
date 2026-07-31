@@ -24,13 +24,51 @@ export function dshuffle(array: string[] | number[]) {
   }
 }
 
-//export default get_unique_id ;
+/**
+ * Normalizes color strings (24-bit hex, 12-bit hex, or web colors)
+ * @param {string} color
+ * @returns {string} 24-bit hex color
+ */
+export function normalizeColor(color: string) {
+  // 1. Handle 12-bit hex (e.g., #ABC -> #AABBCC)
+  if (/^#([A-Fa-f0-9]{3})$/.test(color)) {
+    return color.replace(
+      /^#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])$/,
+      "#$1$1$2$2$3$3",
+    );
+  }
+
+  // 2. Handle 24-bit hex (e.g., #AABBCC)
+  if (/^#([A-Fa-f0-9]{6})$/.test(color)) {
+    return color;
+  }
+
+  // 3. Handle Web Colors (Named colors)
+  // We use a temporary DOM element to resolve named colors
+  const div = document.createElement("div");
+  div.style.color = color;
+  document.body.appendChild(div);
+  const rgb = getComputedStyle(div).color;
+  document.body.removeChild(div);
+
+  // Convert "rgb(r, g, b)" to hex
+  const rgbValues = rgb.match(/\d+/g);
+  if (rgbValues) {
+    return (
+      "#" +
+      rgbValues.map((x) => parseInt(x).toString(16).padStart(2, "0")).join("")
+    );
+  }
+
+  return color; // Fallback or throw error
+}
 
 export function constrastingColor24bit(color: string): string {
+  const thecolor = normalizeColor(color);
   const rgb: string[] = [];
   for (let i = 1, j = 0; i < 7; i += 2, ++j)
     rgb[j] = contrastingComponent24bit(
-      Number.parseInt(color.substring(i, i + 2), 16),
+      Number.parseInt(thecolor.substring(i, i + 2), 16),
     )
       .toString(16)
       .padStart(2, "0");
