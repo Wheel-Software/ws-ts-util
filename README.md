@@ -2,8 +2,7 @@
 
 ![Version](https://img.shields.io/github/v/tag/Wheel-Software/ws-ts-util?label=version&sort=semver)
 
-# Wheel Software: ws-ts-util
+# ws-ts-util: Wheel Software's Typescript Utilities
 
-- Couple of utilities.
 - Integration: 1 source file, 1 test suite;
-  8 exported functions, 8 tests.
+  5 exported functions, 10 tests.

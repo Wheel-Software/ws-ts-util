@@ -35,10 +35,6 @@ const config: Config.InitialOptions = {
     "^.+\\.mjs$": "babel-jest",
   },
   verbose: true,
-  moduleNameMapper: {
-    // Maps '@/' to your source directory (usually 'src/')
-    "^@/(.*)$": "<rootDir>/$1",
-  },
 };
 
 export default config;

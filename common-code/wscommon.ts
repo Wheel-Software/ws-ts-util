@@ -1,3 +1,7 @@
+/**
+ * get_unique_id: wrap UUID method
+ * @returns (crypto)UUID
+ */
 export function get_unique_id(): string {
   //let tuid = gen_name();
   //while (null != document.getElementById(tuid)) tuid = gen_name();
@@ -16,7 +20,11 @@ export function get_unique_id(): string {
 //   return uid;
 // }
 
-// Durstenfeld optimization of the Fisher-Yates-Knuth unbiased shuffle
+/**
+ * Durstenfeld optimization of the Fisher-Yates-Knuth unbiased shuffle
+ * @params string[] | number[]
+ * @returns void (array is shuffled as ref)
+ */
 export function dshuffle(array: string[] | number[]) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -24,8 +32,11 @@ export function dshuffle(array: string[] | number[]) {
   }
 }
 
-//export default get_unique_id ;
-
+/**
+ * constrastingColor24bit: shift each color component +/- by 100
+ * @param color (webcolor | 24-bit hash | 12-bit hash)
+ * @returns 24-bit hash contrasting color
+ */
 export function constrastingColor24bit(color: string): string {
   const rgb: string[] = [];
   for (let i = 1, j = 0; i < 7; i += 2, ++j)
