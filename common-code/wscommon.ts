@@ -60,6 +60,12 @@ function contrastingComponent24bit(comp: number): number {
   else return comp + contr_comp_diff_24bit;
 }
 
+/**
+ * deepEqual: element-by-element binary object comparison
+ * @param obj1 (any)
+ * @param obj2 (any)
+ * @returns boolean
+ */
 export function deepEqual<T>(obj1: T, obj2: T): boolean {
   // 1. Handle primitive types and null/undefined
   if (obj1 === obj2) {
@@ -121,6 +127,11 @@ export function deepEqual<T>(obj1: T, obj2: T): boolean {
   return true;
 }
 
+/**
+ * escapeRegex: escape general strings for regex
+ * @param raw string
+ * @returns regex string
+ */
 export function escapeRegex(string: string): string {
   return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 }
