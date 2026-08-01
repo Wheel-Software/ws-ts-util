@@ -7,6 +7,54 @@ describe("get_unique_id", () => {
   });
 });
 
+import { afterEach, jest } from "@jest/globals";
+afterEach(() => {
+  jest.restoreAllMocks(); // don't leak the Math.random mocks
+});
+
+describe("dshuffle", () => {
+  test("preserves length and contents", () => {
+    const input = [1, 2, 3, 4, 5];
+    const copy = structuredClone(input);
+
+    wsc.dshuffle(copy);
+
+    expect(copy).toHaveLength(input.length);
+    expect([...copy].sort()).toEqual([...input].sort());
+  });
+
+  test("produces a deterministic permutation for a fixed random stream", () => {
+    jest
+      .spyOn(Math, "random")
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0)
+      .mockReturnValueOnce(0);
+
+    const input = [1, 2, 3, 4, 5];
+    const copy = structuredClone(input);
+
+    wsc.dshuffle(copy);
+
+    expect(copy).toEqual([2, 3, 4, 5, 1]);
+  });
+});
+
+describe("normalizeColor", () => {
+  test("12-bit to 24-bit", () => {
+    const the12 = "#123";
+    const the24 = "#112233";
+    const theConv = wsc.normalizeColor(the12);
+    expect(theConv).toBe(the24);
+  });
+  test("webcolor to 24-bit", () => {
+    const thewc = "teal";
+    const the24 = "#008080";
+    const theConv = wsc.normalizeColor(thewc);
+    expect(theConv).toBe(the24);
+  });
+});
+
 describe("constrastingColor24bit", () => {
   test("returns contrasting color for #000000", () => {
     expect(wsc.constrastingColor24bit("#000000")).not.toBe("#000000");
