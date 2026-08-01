@@ -5,4 +5,4 @@
 # ws-ts-util: Wheel Software's Typescript Utilities
 
 - Integration: 1 source file, 1 test suite;
-  5 exported functions, 10 tests.
+  6 exported functions, 10 tests.

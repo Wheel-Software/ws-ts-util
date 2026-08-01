@@ -43,6 +43,21 @@ describe("dshuffle", () => {
   });
 });
 
+describe("normalizeColor", () => {
+  test("12-bit to 24-bit", () => {
+    const the12 = "#123";
+    const the24 = "#112233";
+    const theConv = wsc.normalizeColor(the12);
+    expect(theConv).toBe(the24);
+  });
+  test("webcolor to 24-bit", () => {
+    const thewc = "teal";
+    const the24 = "#008080";
+    const theConv = wsc.normalizeColor(thewc);
+    expect(theConv).toBe(the24);
+  });
+});
+
 describe("constrastingColor24bit", () => {
   test("returns contrasting color for #000000", () => {
     expect(wsc.constrastingColor24bit("#000000")).not.toBe("#000000");

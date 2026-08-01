@@ -9,17 +9,6 @@ export function get_unique_id(): string {
   return crypto.randomUUID();
 }
 
-// function gen_name(): string {
-//   const lowers = "abcdefghijklmnopqrstuvwxyz";
-//   const uppers = lowers.toUpperCase();
-//   const cset = lowers + uppers + "0123456789";
-//   let uid = lowers[Math.round(Math.random() * 25)];
-//   for (let i = 0; i < 10; i++) {
-//     uid += cset[Math.round(Math.random() * 61)];
-//   }
-//   return uid;
-// }
-
 /**
  * Durstenfeld optimization of the Fisher-Yates-Knuth unbiased shuffle
  * @params string[] | number[]
@@ -33,15 +22,55 @@ export function dshuffle(array: string[] | number[]) {
 }
 
 /**
+ * normalizeColor: Normalizes color strings (24-bit hex, 12-bit hex, or web colors)
+ * @param {string} color
+ * @returns {string} 24-bit hex color
+ */
+export function normalizeColor(color: string): string {
+  // 1. Handle 12-bit hex (e.g., #ABC -> #AABBCC)
+  if (/^#([A-Fa-f0-9]{3})$/.test(color)) {
+    return color.replace(
+      /^#([A-Fa-f0-9])([A-Fa-f0-9])([A-Fa-f0-9])$/,
+      "#$1$1$2$2$3$3",
+    );
+  }
+
+  // 2. Handle 24-bit hex (e.g., #AABBCC)
+  if (/^#([A-Fa-f0-9]{6})$/.test(color)) {
+    return color;
+  }
+
+  // 3. Handle Web Colors (Named colors)
+  // We use a temporary DOM element to resolve named colors
+  const div = document.createElement("div");
+  div.style.color = color;
+  document.body.appendChild(div);
+  const rgb = getComputedStyle(div).color;
+  document.body.removeChild(div);
+
+  // Convert "rgb(r, g, b)" to hex
+  const rgbValues = rgb.match(/\d+/g);
+  if (rgbValues) {
+    return (
+      "#" +
+      rgbValues.map((x) => parseInt(x).toString(16).padStart(2, "0")).join("")
+    );
+  }
+
+  return color; // Fallback or throw error
+}
+
+/**
  * constrastingColor24bit: shift each color component +/- by 100
  * @param color (webcolor | 24-bit hash | 12-bit hash)
  * @returns 24-bit hash contrasting color
  */
 export function constrastingColor24bit(color: string): string {
+  const theColor = normalizeColor(color);
   const rgb: string[] = [];
   for (let i = 1, j = 0; i < 7; i += 2, ++j)
     rgb[j] = contrastingComponent24bit(
-      Number.parseInt(color.substring(i, i + 2), 16),
+      Number.parseInt(theColor.substring(i, i + 2), 16),
     )
       .toString(16)
       .padStart(2, "0");
